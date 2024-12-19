@@ -115,7 +115,7 @@ export const getAllProduct =async(req,res,next) =>{
   const products = await apiFeature.mongooseQuery
   const productsWithLinks = products.map((product) => ({
     ...product._doc,
-    shareLink: `${process.env.BASE_URL}/api/v1/product-id/${product._id}`,
+    shareLink: `${process.env.BASE_URL}api/v1/product-id/${product._id}`,
   }));
 // Count total number of categories
 const TotalProduct = await Product.countDocuments();
@@ -140,7 +140,7 @@ export const getProductById = async (req, res, next) => {
     }
 
     // Generate share link
-    const shareLink = `${process.env.BASE_URL}/api/v1/product-id/${product._id}`;
+    const shareLink = `${process.env.BASE_URL}api/v1/product-id/${product._id}`;
 
     // Handle views for authenticated users
     if (userId) {
