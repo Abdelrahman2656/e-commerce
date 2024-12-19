@@ -10,7 +10,6 @@ import path from "path";
 import Stripe from "stripe";
 import { dbconnection } from "./Database/dbconnection.js";
 import { initApp } from "./src/initApp.js";
-import './src/utils/google-oauth.js';
 import { deletePendingUser } from "./src/utils/schedule.js";
 
 // import session from "express-session";
