@@ -9,10 +9,7 @@ export const initApp =(app , express)=>{
     app.use(express.json())
     
 
-    app.get('/',(req,res)=>{
-        console.log("server is running");
-        
-    })
+  
     // Configure session
     // app.use(
     //   Session({
