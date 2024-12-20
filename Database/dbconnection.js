@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 export const dbconnection = () => {
-    return mongoose.connect("mongodb+srv://abdelrahman:eIL88lAvbWXO2eK9@cluster0.ozsvg.mongodb.net/e-commerce").then(() => {
-        console.log(`db connected successfully `);
+    return mongoose.connect(process.env.DB_URL).then(() => {
+        console.log(`db connected successfully ${process.env.DB_URL}`);
     }).catch((err) => {
         console.log('field to connect to db');
     })
