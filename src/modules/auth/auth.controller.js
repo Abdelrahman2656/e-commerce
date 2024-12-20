@@ -34,7 +34,7 @@ export const signUp = async (req, res, next) => {
 
       await saveVerificationData({ email, verificationCode, expirationTime });
 
-      const verificationLink = `${req.protocol}://${req.headers.host}/api/v1/verify/${token}`;
+      const verificationLink = `${req.protocol}://${req.headers.host}api/v1/verify/${token}`;
       const emailContent = emailHtml(
         verificationLink,
         verificationCode,
