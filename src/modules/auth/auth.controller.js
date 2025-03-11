@@ -366,7 +366,7 @@ export const changePassword = async (req, res, next) => {
   //send password
   return res
     .status(200)
-    .json({ message: messages.user.updateSuccessfully, success: false });
+    .json({ message: messages.user.updateSuccessfully, success:true });
 };
 //update user
 export const updateUser = async (req, res, next) => {
