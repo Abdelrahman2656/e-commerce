@@ -1,7 +1,5 @@
 # 🛒 Session-Powered E-Commerce RESTful API
 
-![Session E-Commerce App Backend](./Images/ecommerce_banner_professional.png)
-
 > **A robust, production-ready backend for modern e-commerce platforms.**  
 > Built with Node.js, Express, and MongoDB, this project showcases advanced features like Stripe payments, Google OAuth, PDF invoice generation, and automated task scheduling.
 
@@ -12,33 +10,47 @@
 - [🛠️ Tech Stack](#️-tech-stack)
 - [📐 Architecture](#-system-architecture)
 - [📦 Installation](#-getting-started)
-- [📜 API Documentation](#-api-endpoints)
+- [📜 API Documentation](#-api-documentation)
 
 ---
 
 ## 🚀 Key Features
 
-### 🔐 Advanced Authentication & Security
-- **Multi-Factor Auth Support**: Secure JWT-based authentication combined with email verification.
-- **Social Login**: Seamless integration with **Google OAuth 2.0** via Passport.js.
-- **Role-Based Access Control (RBAC)**: Distinct permissions for `Admin` and `User`.
-- **Password Security**: Cryptographic hashing using `bcrypt`.
+### 🔐 Authentication & Authorization
+- **Secure Signup**: Users registration with email verification flow.
+- **JWT Authentication**: Token-based access with expiration and secure storage.
+- **Social Login**: Integrated **Google OAuth 2.0** for seamless user onboarding.
+- **RBAC (Role Based Access Control)**: Granular permissions for `Admin` and `User` roles.
+- **Security Check**: Password hashing using `bcrypt` and verification tokens.
 
-### 🛍️ Comprehensive Product Management
-- **Hierarchical Categories**: Categories, Subcategories, and Brands management.
-- **Rich Product Details**: Slugified URLs, Cloudinary-hosted images, stock management, and pricing.
-- **User Reviews**: Integrated rating system for products to build trust.
+### 📦 Module Overviews & Logic
 
-### 💳 Seamless Checkout & Payments
-- **Stripe Integration**: Professional payment processing for secure credit card transactions.
-- **Smart Cart**: Cart persistence with real-time price updates and quantity management.
-- **Coupon System**: Dynamic discount management with expiry dates (powered by `Luxon`).
-- **Automated Invoices**: Dynamic **PDF Invoice Generation** upon order completion using `PDFKit`.
+#### 🏷️ Product & Category Management
+- **Hierarchical Structure**: Deep categorization with Categories, Subcategories, and Brands.
+- **Advanced Search**: Filtering by brand, category, price range, and search terms.
+- **Dynamic Pricing**: Automatic calculation of `finalPrice` based on base price and active discounts.
+- **Stock Control**: Real-time stock tracking that decreases upon successful orders.
+- **Reviews & Ratings**: Feedback system allowing users to rate products and leave detailed reviews.
 
-### ⚙️ Backend Excellence
-- **Automated Scheduling**: Cron jobs via `node-schedule` for background tasks (e.g., cleaning expired coupons).
-- **Media Management**: High-speed image uploads and transformations via **Cloudinary**.
-- **Input Validation**: Bulletproof data validation using **Joi** schemas.
+#### 🛒 Cart & Wishlist
+- **Persistent Cart**: Items are saved per user, allowing for a seamless cross-session experience.
+- **Smart Checkout**: Validates stock availability and active coupons before proceeding to payment.
+- **User Wishlist**: Allowing users to save their favorite items for future purchases.
+
+#### 🎫 Coupon & Discount System
+- **Dynamic Coupons**: Admins can create coupons with percentage discounts and expiry dates.
+- **Real-time Validation**: Coupons are validated during the checkout process using `Luxon` for time-zone accurate expiry checks.
+
+#### 💳 Orders & Payments
+- **Stripe Integration**: Secure credit card processing via Stripe's official API.
+- **Payment Options**: Supports both `Cash on Delivery` and `Prepaid (Stripe)` methods.
+- **Automated Operations**: 
+    - **PDF Invoices**: Professional invoices generated via `PDFKit` and sent to the user upon order placement.
+    - **Stock Update**: Automatic inventory deduction on successful transactions.
+
+#### ⚙️ Maintenance & Automation
+- **Scheduled Tasks**: Background jobs using `node-schedule` to clean up expired data or handle recurring operations.
+- **Media Handling**: Centralized image management via **Cloudinary** for optimized asset delivery.
 
 ---
 
@@ -61,14 +73,13 @@ The project follows a **Modular MVC Architecture**, ensuring scalability and mai
 
 ```text
 src/
-├── modules/          # Domain-driven modules (User, Product, Order, etc.)
-│   ├── User/
-│   │   ├── user.controller.js
-│   │   ├── user.router.js
-│   │   └── user.validation.js
-├── middleware/       # Custom auth, error handling, and file uploads
-├── utils/            # Reusable helpers (Email, PDF Gen, General Utils)
-└── database/         # MongoDB connection & Mongoose models
+├── modules/          # Domain-driven modules (Auth, User, Product, Order, etc.)
+│   ├── Product/      # Controllers, Routers, and Validation logic for Products
+│   ├── Order/        # Payment processing and Invoice triggers
+│   └── ...           # (Category, Brand, Coupon, Review, etc.)
+├── middleware/       # Custom auth, error handling, and multer file uploads
+├── utils/            # Reusable helpers (Email templates, PDF Generation, API Features)
+└── database/         # MongoDB connection & Mongoose model definitions
 ```
 
 ---
@@ -78,7 +89,7 @@ src/
 ### Prerequisites
 - Node.js (v14+)
 - MongoDB Atlas or Local Instance
-- Cloudinary & Stripe Cloud Accounts
+- Cloudinary & Stripe Developer Accounts
 
 ### Installation
 
@@ -94,38 +105,24 @@ src/
    ```
 
 3. **Environment Setup**
-   Create a `.env` file in the root directory:
-   ```env
-   PORT=3000
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret
-   STRIPE_KEY=your_stripe_key
-   CLOUDINARY_NAME=your_name
-   # ... add other keys
-   ```
+   Create a `.env` file in the root directory and populate it with your credentials (see `.env.example` if available).
 
 4. **Run development server**
    ```bash
-   npm start
+   npm start # or npm run dev
    ```
 
 ---
 
-## 📜 API Endpoints (Snapshot)
+## 📜 API Documentation
 
-| Method | Endpoint | Description | Access |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/v1/auth/signup` | Register new account | Public |
-| `POST` | `/api/v1/product` | Create new product | Admin |
-| `PATCH` | `/api/v1/cart` | Update cart items | User |
-| `POST` | `/api/v1/order` | Place order & Pay | User |
+Comprehensive API documentation with request/response examples is available on Postman:
 
-> **Detailed documentation available at:** [Postman Collection Link / Swagger Link] (Coming soon)
+👉 **[View Full API Documentation on Postman](https://documenter.getpostman.com/view/29989813/2sAYJ1mNa6)**
 
 ---
 
 ## 🤝 Contributing
-Contributions are what make the open source community such an amazing place to learn, inspire, and create.
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
@@ -137,7 +134,7 @@ Contributions are what make the open source community such an amazing place to l
 ## 👤 Author
 **Abdelrahman**  
 - [GitHub](https://github.com/Abdelrahman2656)  
-- [LinkedIn](https://www.linkedin.com/in/your-profile) (Recommended: Add your link!)
+- [LinkedIn](https://www.linkedin.com/in/abdelrahman-elmonged-aa89992a3/)
 
 ---
 
@@ -146,5 +143,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 <p align="center">
-  Generated with ❤️ by Antigravity AI
+  Crafted with precision for scalable e-commerce solutions.
 </p>
