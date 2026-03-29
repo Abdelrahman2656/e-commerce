@@ -10,7 +10,8 @@ import { dbconnection } from "./Database/dbconnection.js";
 import { initApp } from "./src/initApp.js";
 import { deletePendingUser } from "./src/utils/schedule.js";
 const app = express();
-const port =3000;
+const port =3000  
+
 console.log(port);
 
 dotenv.config({ path: path.resolve("./config/.env") });
@@ -27,5 +28,7 @@ process.on('unhandledRejection',(err)=>{
     
 })
 app.get("/", (req, res) => res.send("Hello World! gg"));
-
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 //6Lf9RrAqAAAAAJ8FNI8DVqvNHYw_UbS0lXmPLgL9
