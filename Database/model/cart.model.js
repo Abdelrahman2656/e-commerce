@@ -34,7 +34,7 @@ cartSchema.methods.calculateCartPrices = async function () {
     
     this.totalCartPrice = totalCartPrice;
   
-   
+  
     if (this.discount) {
       this.totalCartPriceAfterDiscount =
         totalCartPrice - (totalCartPrice * this.discount) / 100;
